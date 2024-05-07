@@ -1,23 +1,25 @@
 import Navbar from "@/scenes/navbar";
+import Home from "@/scenes/home";
 import { useEffect, useState } from "react";
 import { SelectedPage } from "@/shared/types";
+import Benefits from "@/scenes/benefits";
 
 function App() {
   const [selectedPage, setSelectedPage] = useState<SelectedPage>(
     SelectedPage.Home,
   );
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
-
   useEffect(() => {
     const handleScroll = () => {
-      if (window.screenY === 0) {
+      if (window.scrollY === 0) {
         setIsTopOfPage(true);
         setSelectedPage(SelectedPage.Home);
       } else {
         setIsTopOfPage(false);
       }
-      window.addEventListener("scroll", handleScroll);
     };
+
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -25,12 +27,14 @@ function App() {
   }, []);
 
   return (
-    <div className="app bg-gray-50">
+    <div className="app bg-gray-20">
       <Navbar
         selectedPage={selectedPage}
         setSelectedPage={setSelectedPage}
         isTopOfPage={isTopOfPage}
       />
+      <Home setSelectedPage={setSelectedPage} />
+      <Benefits setSelectedPage={setSelectedPage} />
     </div>
   );
 }
